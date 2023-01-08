@@ -22,14 +22,22 @@ function handleTitleClick() {
 
 h5.addEventListener("click", handleTitleClick);
 
-const loginForm = document.querySelector(".SHJ-login-form");
-const loginInput = document.querySelector(".SHJ-login-form input");
+const loginForm = document.querySelector("#SHJ-login-form");
+const loginInput = document.querySelector("#SHJ-login-form input");
+const greeting = document.querySelector("#greeting");
+
+const HIDDEN_CLASSNAME = "hidden";
+const USERNAME_KEY = "username";
 
 const link = document.querySelector("a");
 
 function onLoginSubmit(event) {
     event.preventDefault();
-    console.log(loginInput.value);
+    loginForm.classList.add(HIDDEN_CLASSNAME);
+    const username = loginInput.value;
+    localStorage.setItem(USERNAME_KEY, username);
+    // greeting.innerText = "Hello! " + username;
+    paintGreetings(username);
     // const username = loginInput.value;
     // console.log(username);
 }
@@ -39,8 +47,19 @@ function handleLinkClick(event) {
     console.log(event);
 }
 
-loginForm.addEventListener("submit", onLoginSubmit);
 link.addEventListener("click", handleLinkClick)
 
-handleLinkClick()
 
+function paintGreetings(username) {
+    greeting.classList.remove(HIDDEN_CLASSNAME);
+    greeting.innerText = `Hello! ${username}`; 
+}
+
+const savedUsername = localStorage.getItem(USERNAME_KEY);
+
+if(savedUsername === null){
+    loginForm.classList.remove(HIDDEN_CLASSNAME);
+    loginForm.addEventListener("submit", onLoginSubmit);
+} else {
+    paintGreetings(savedUsername);
+}

@@ -13,3 +13,7 @@ h5 {
 .SHJ-component__text2 {
     color : tomato;
 }
+
+.hidden {
+    display : none;
+}
